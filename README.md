@@ -59,20 +59,30 @@ They would produce the following output:
 
 Reproducing the example from the paper
 --------------------------------------
-Figure 10 of the paper cited above:
+Figure 10 of the paper cited above (modified to remove the implicit last vertex):
 
-    0  10  11  6  13   3  4  15  0                    1   8   4  13  12  1
-    0  10  11  6  13  12  1   8  0                    1   8   4  13  12  1
-    0  10  11  6  13  12  1   8  4  15  0             3   3
-    0  10  11  6  13  12  1   8  0                    3   4  13   3
-    0  10  11  6  13  12  1   8  4  15  0             3   6  13   3
-    0  10  11  6  13  15  0                           6  13  12  10  11  6
-    0  14  11  6  13   3  4  15  0                    6  13  12  14  11  6
-    0  14  11  6  13  12  1   8  0                    8   8
-    0  14  11  6  13  12  1   8  4  15  0             9   9
-    0  14  11  6  13  12  1   8  0                   12  12
-    0  14  11  6  13  12  1   8  4  15  0
-    0  14  11  6  13  15  0
+    0  10  11  6  13   3  4  15
+    0  10  11  6  13  12  1   8
+    0  10  11  6  13  12  1   8  4  15
+    0  10  11  6  13  12  1   8
+    0  10  11  6  13  12  1   8  4  15
+    0  10  11  6  13  15
+    0  14  11  6  13   3  4  15
+    0  14  11  6  13  12  1   8
+    0  14  11  6  13  12  1   8  4  15
+    0  14  11  6  13  12  1   8
+    0  14  11  6  13  12  1   8  4  15
+    0  14  11  6  13  15
+    1   8   4  13  12
+    1   8   4  13  12
+    3
+    3   4  13
+    3   6  13
+    6  13  12  10  11
+    6  13  12  14  11
+    8
+    9
+   12
 
 Figure 10: 22 Circuits found in the network shown in figure 9 which has 16
 nodes and 32 arcs and allows self-arcs. Note there are repeated circuits due
