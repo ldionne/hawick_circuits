@@ -3,7 +3,7 @@ WFLAGS=-Wall -Wextra -pedantic
 INCLUDES=-I `pwd`
 
 all:
-	$(CXX) $(WFLAGS) $(INCLUDES) -o hawick_circuits test_hawick_circuits.cpp
+	$(CXX) $(WFLAGS) $(INCLUDES) -o hawick_circuits hawick_circuits.cpp
 
 clean:
-	rm -f hawick_circuits
+	if [ -e hawick_circuits ]; then rm hawick_circuits; fi
