@@ -82,7 +82,7 @@ Figure 10 of the paper cited above (modified to remove the implicit last vertex)
     6  13  12  14  11
     8
     9
-   12
+    12
 
 Figure 10: 22 Circuits found in the network shown in figure 9 which has 16
 nodes and 32 arcs and allows self-arcs. Note there are repeated circuits due
