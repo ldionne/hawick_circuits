@@ -7,8 +7,8 @@
 #ifndef BOOST_GRAPH_HAWICK_CIRCUITS_HPP
 #define BOOST_GRAPH_HAWICK_CIRCUITS_HPP
 
+#include <algorithm>
 #include <boost/assert.hpp>
-#include <boost/detail/algorithm.hpp>
 #include <boost/foreach.hpp>
 #include <boost/graph/graph_traits.hpp>
 #include <boost/graph/one_bit_color_map.hpp>
@@ -74,6 +74,15 @@ struct get_unique_adjacent_vertices {
                    adjacent_vertices(v, g).second);
     }
 };
+
+//! @internal
+//! Return whether a container contains a given value.
+//! This is not meant as a general purpose membership testing function; it
+//! would have to be more clever about possible optimizations.
+template <typename Container, typename Value>
+bool contains(Container const& c, Value const& v) {
+    return std::find(boost::begin(c), boost::end(c), v) != boost::end(c);
+}
 
 /*!
  * @internal
@@ -163,7 +172,7 @@ private:
     bool is_closed_to(Vertex u, Vertex v) const {
         typedef typename ClosedMatrix::const_reference VertexList;
         VertexList closed_to_u = closed_[index_of(u)];
-        return container_contains(closed_to_u, v);
+        return contains(closed_to_u, v);
     }
 
     //! @internal Close a vertex `v` to a vertex `u`.
@@ -211,7 +220,9 @@ private:
         AdjacencyIterator const w_end = boost::end(adj_vertices);
 
         for (AdjacencyIterator w_it = boost::begin(adj_vertices);
-                                                    w_it != w_end; ++w_it) {
+             w_it != w_end;
+             ++w_it)
+        {
             Vertex const w = *w_it;
             // Since we're only looking in the subgraph induced by `start`
             // and the vertices with an index higher than `start`, we skip
@@ -236,7 +247,9 @@ private:
             unblock(v);
         else
             for (AdjacencyIterator w_it = boost::begin(adj_vertices);
-                                                    w_it != w_end; ++w_it) {
+                 w_it != w_end;
+                 ++w_it)
+            {
                 Vertex const w = *w_it;
                 // Like above, we skip vertices that are not in the subgraph
                 // we're considering.
