@@ -324,26 +324,7 @@ void call_hawick_circuits(BOOST_FWD_REF(Graph) graph,
 }
 } // end namespace hawick_circuits_detail
 
-/*!
- * Algorithm for finding all the elementary circuits in a directed
- * [multi]graph.
- *
- * The algorithm is described in
- * <http://www.massey.ac.nz/~kahawick/cstn/013/cstn-013.pdf>.
- *
- * @param graph The graph to analyze for cycles.
- *
- * @param visitor
- *        A visitor modeling the `CycleVisitor` concept. It will be called
- *        each time a cycle is found, the cycle being in the form of a
- *        random access sequence. For example, if a cycle `u -> v -> w -> u`
- *        exists in the graph, the visitor will be called with a path
- *        consisting of `(u, v, w)`.
- *
- * @param vertex_index_map
- *        A `ReadablePropertyMap` mapping each vertex to an integer in the
- *        range `[0, num_vertices(graph))`.
- */
+//! Enumerate all the elementary circuits in a directed multigraph.
 template <typename Graph, typename Visitor, typename VertexIndexMap>
 void hawick_circuits(BOOST_FWD_REF(Graph) graph,
                      BOOST_FWD_REF(Visitor) visitor,
@@ -366,10 +347,8 @@ void hawick_circuits(BOOST_FWD_REF(Graph) graph,
 }
 
 /*!
- * Same as `boost::hawick_circuits`, but duplicate cycles caused by parallel
- * edges will not be considered. Each cycle will be considered only once.
- *
- * @note This incurs some overhead.
+ * Same as `boost::hawick_circuits`, but duplicate circuits caused by parallel
+ * edges will not be considered. Each circuit will be considered only once.
  */
 template <typename Graph, typename Visitor, typename VertexIndexMap>
 void hawick_unique_circuits(BOOST_FWD_REF(Graph) graph,
