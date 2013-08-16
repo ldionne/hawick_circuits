@@ -7,8 +7,8 @@
 #ifndef BOOST_GRAPH_HAWICK_CIRCUITS_HPP
 #define BOOST_GRAPH_HAWICK_CIRCUITS_HPP
 
-#include <algorithm>
 #include <boost/assert.hpp>
+#include <boost/detail/algorithm.hpp>
 #include <boost/foreach.hpp>
 #include <boost/graph/graph_traits.hpp>
 #include <boost/graph/one_bit_color_map.hpp>
@@ -74,13 +74,6 @@ struct get_unique_adjacent_vertices {
                    adjacent_vertices(v, g).second);
     }
 };
-
-//! @internal Return whether a container contains a given value.
-template <typename Container, typename Value>
-bool contains(Container const& cont, BOOST_FWD_REF(Value) value) {
-    return std::find(cont.begin(), cont.end(), boost::forward<Value>(value))
-            != cont.end();
-}
 
 /*!
  * @internal
@@ -170,7 +163,7 @@ private:
     bool is_closed_to(Vertex u, Vertex v) const {
         typedef typename ClosedMatrix::const_reference VertexList;
         VertexList closed_to_u = closed_[index_of(u)];
-        return contains(closed_to_u, v);
+        return container_contains(closed_to_u, v);
     }
 
     //! @internal Close a vertex `v` to a vertex `u`.
@@ -333,9 +326,10 @@ void call_hawick_circuits(BOOST_FWD_REF(Graph) graph,
 
 /*!
  * Algorithm for finding all the elementary circuits in a directed
- * (multi)graph.
+ * [multi]graph.
  *
- * The algorithm is described in [1].
+ * The algorithm is described in
+ * <http://www.massey.ac.nz/~kahawick/cstn/013/cstn-013.pdf>.
  *
  * @param graph The graph to analyze for cycles.
  *
