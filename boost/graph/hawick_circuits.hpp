@@ -186,7 +186,6 @@ private:
     //! @internal Unblock a given vertex.
     void unblock(Vertex u) {
         typedef typename ClosedMatrix::reference VertexList;
-        typedef typename ClosedMatrix::value_type::iterator ClosedVertexIter;
 
         put(blocked_, u, blocked_false_color());
         VertexList closed_to_u = closed_[index_of(u)];
@@ -272,7 +271,8 @@ template <
     typename GetAdjacentVertices,
     typename Graph, typename Visitor, typename VertexIndexMap
 >
-void call_hawick_circuits(Graph const& graph, Visitor /* by value */ visitor,
+void call_hawick_circuits(Graph const& graph,
+                          Visitor /* by value */ visitor,
                           VertexIndexMap const& vertex_index_map) {
     typedef graph_traits<Graph> Traits;
     typedef typename Traits::vertex_descriptor Vertex;
@@ -310,17 +310,10 @@ void call_hawick_circuits(Graph const& graph, Visitor /* by value */ visitor,
 }
 
 template <typename GetAdjacentVertices, typename Graph, typename Visitor>
-void call_hawick_circuits(BOOST_FWD_REF(Graph) graph,
-                          BOOST_FWD_REF(Visitor) visitor) {
-    typedef typename remove_reference<Graph>::type RawGraph;
-    typedef typename property_map<
-                RawGraph, vertex_index_t
-            >::const_type VertexIndexMap;
-
-    VertexIndexMap vim = get(vertex_index, graph);
-    call_hawick_circuits<GetAdjacentVertices>(boost::forward<Graph>(graph),
-                                              boost::forward<Visitor>(visitor),
-                                              boost::move(vim));
+void call_hawick_circuits(Graph const& graph, BOOST_FWD_REF(Visitor) visitor) {
+    call_hawick_circuits<GetAdjacentVertices>(
+        graph, boost::forward<Visitor>(visitor), get(vertex_index, graph)
+    );
 }
 } // end namespace hawick_circuits_detail
 
